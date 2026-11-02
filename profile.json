@@ -1,0 +1,12 @@
+{
+  "name": "smartparcel",
+  "platform": "nordic-nrf91",
+  "metrics": [
+    { "key": "30", "name": "class_idx", "label": "Class index", "unit": "" },
+    { "key": "31", "name": "confidence", "label": "Confidence", "unit": "" },
+    { "key": "32", "name": "seq", "label": "Event sequence", "unit": "" },
+    { "key": "33", "name": "age_ms", "label": "Inference age", "unit": "ms" },
+    { "key": "34", "name": "rtt_ms", "label": "Prior RTT", "unit": "ms" },
+    { "key": "35", "name": "probs_pack", "label": "Probabilities packed", "unit": "" }
+  ]
+}

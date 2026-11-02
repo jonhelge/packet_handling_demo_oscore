@@ -1,0 +1,5 @@
+.env
+.DS_Store
+scripts/oscore-client-context/settings.json
+scripts/oscore-client-context/sequence.json
+scripts/build-firmware.sh

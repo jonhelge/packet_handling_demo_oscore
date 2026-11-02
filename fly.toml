@@ -1,0 +1,46 @@
+# Placeholder app name — scripts/fly-deploy.sh passes --app $FLY_APP.
+app = "smartparcel-oscore"
+primary_region = "arn"
+
+[build]
+  dockerfile = "Dockerfile"
+  [build.args]
+    OSCORE_SERVER_VERSION = "0.1.0-preview.2"
+
+[env]
+  OSCORE_COAP_ADDR = "fly-global-services:5683"
+  PB_RETENTION_DAYS = "90"
+  PGPS_DISABLE = "1"
+
+[mounts]
+  source = "pb_data"
+  destination = "/pb_data"
+
+[http_service]
+  internal_port = 8090
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "30s"
+    method = "get"
+    path = "/api/health"
+
+[[services]]
+  internal_port = 5683
+  protocol = "udp"
+  [[services.ports]]
+    port = 5683
+
+[[services]]
+  internal_port = 5683
+  protocol = "tcp"
+  [[services.ports]]
+    port = 5683
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

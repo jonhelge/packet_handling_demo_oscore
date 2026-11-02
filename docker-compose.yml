@@ -1,0 +1,23 @@
+# SmartParcel on the released oscore-server image (extension folders mounted).
+#
+#   cp .env.example .env
+#   docker compose up -d
+services:
+  oscore-server:
+    image: ghcr.io/joncloud-dev/oscore-server:${OSCORE_SERVER_VERSION:?set OSCORE_SERVER_VERSION in .env}
+    restart: unless-stopped
+    environment:
+      PB_OSCORE_KEK: "${PB_OSCORE_KEK:?set PB_OSCORE_KEK in .env (openssl rand -hex 32)}"
+      PB_RETENTION_DAYS: "${PB_RETENTION_DAYS:-90}"
+      PGPS_DISABLE: "1"
+    ports:
+      - "${HTTP_PORT:-8090}:8090/tcp"
+      - "${COAP_PORT:-5683}:5683/udp"
+    volumes:
+      - pb_data:/pb_data
+      - ./pb_hooks:/pb_hooks:ro
+      - ./pb_migrations:/pb_migrations:ro
+      - ./pb_public:/pb_public:ro
+
+volumes:
+  pb_data:
